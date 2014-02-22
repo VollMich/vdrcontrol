@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>Bootstrap, from Twitter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+
+.trow {
+   vertical-align: middle;
+}
+
+
+
+.dings {
+   background-color: green;
+}
+
+</style>
+<script type="text/javascript">
+
+function switchStation(station) {
+   $("#row"+station).addClass('dings');
+
+   $.ajax("/switchStation", {
+      "success": function(resp) {
+         $("#row"+station).removeClass('dings');
+      },
+      "data": {
+         "station": station
+      }
+   })
+}
+
+</script>
+</head>
+<body>
+
+
+   <div class="table-responsive">
+      <table class="table">
+      {% for channel in channels %}
+      <tr>
+         <td class="trow" id="row{{channel.id}}" onclick="javascript:switchStation({{channel.id}})">
+             <button class="btn btn-default">{{channel.id}}</button> 
+             <span>{{channel.name}}</span>
+         </td>
+      </tr>
+      {% endfor %}
+      </table>
+   </div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+$.fn.animateHighlight = function(highlightColor, duration) {
+    var highlightBg = highlightColor || "#FFFF9C";
+    var animateMs = duration || 1500;
+    var originalBg = this.css("backgroundColor");
+    this.stop().css("background-color", highlightBg).animate({backgroundColor: originalBg}, animateMs);
+};
+
+</script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
